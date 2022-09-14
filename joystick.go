@@ -26,7 +26,7 @@ type JoyStick struct {
 	sentKeyChan      chan bool
 	abortSendKeyChan chan bool
 	closeChan        chan bool
-	wg               sync.WaitGroup
+	wg               *sync.WaitGroup
 }
 
 func NewJoyStick(options ...func(*JoyStick)) (joyStick *JoyStick) {
@@ -37,6 +37,7 @@ func NewJoyStick(options ...func(*JoyStick)) (joyStick *JoyStick) {
 	for _, option := range options {
 		option(joyStick)
 	}
+	joyStick.wg = &sync.WaitGroup{}
 	return
 }
 
